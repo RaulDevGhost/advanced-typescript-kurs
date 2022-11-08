@@ -1,13 +1,17 @@
 import { faker } from '@faker-js/faker';
+import { Sizes } from './products/product.model';
 
-import { products, addProduct } from './products/product.service';
+import {
+  products,
+  addProduct,
+  editProduct,
+  deleteProduct,
+  findProducts,
+} from './products/product.service';
 
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < 5; i++) {
   addProduct({
-    id: faker.datatype.uuid(),
     title: faker.commerce.productName(),
-    createdAt: faker.date.recent(),
-    updatedAt: faker.date.recent(),
     stock: faker.datatype.number({ min: 10, max: 100 }),
     image: faker.image.abstract(1234, 2345),
     description: faker.commerce.productDescription(),
@@ -15,13 +19,27 @@ for (let i = 0; i < 50; i++) {
     price: parseInt(faker.commerce.price()),
     isNew: faker.datatype.boolean(),
     tags: faker.datatype.array(),
-    category: {
-      id: faker.datatype.uuid(),
-      createdAt: faker.date.recent(),
-      updatedAt: faker.date.recent(),
-      name: faker.commerce.department(),
-    },
+    size: faker.helpers.arrayElement(['S', 'M', 'L', 'XL']),
+    categoryId: faker.datatype.uuid(),
   });
 }
 
+const changes = {
+  title: 'Test One',
+  stock: 69,
+  size: 'S' as Sizes,
+  description: 'fuck',
+  color: 'OHHHHHHHH',
+  price: 1200,
+};
+
+editProduct(products[0]['id'], changes);
 console.log(products);
+//deleteProduct(products[0]['id']);
+
+findProducts({
+  stock: 10,
+  color: 'red',
+  createdAt: new Date(),
+  isNew: true,
+});
