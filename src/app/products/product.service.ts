@@ -34,7 +34,14 @@ export const addProduct = (data: CreateProductDto): Product => {
 //     }
 //   });
 // };
-export const editProduct = (id: string, changes: UpdateProductDto): Product => {
+
+// myarray.filter(someobject => someobject.key == 'B')
+//        .forEach(someobject => someobject.mark = "marked!")
+
+export const editProduct = (
+  id: Product['id'],
+  changes: UpdateProductDto
+): Product => {
   const index = products.findIndex((item) => item.id === id);
   const prevData = products[index];
   products[index] = {
@@ -44,7 +51,7 @@ export const editProduct = (id: string, changes: UpdateProductDto): Product => {
   return products[index];
 };
 
-export const deleteProduct = (id: string) => {
+export const deleteProduct = (id: Product['id']) => {
   products.filter((item, i) => {
     if (item.id === id) {
       products.splice(i, 1);
@@ -53,8 +60,11 @@ export const deleteProduct = (id: string) => {
 };
 
 export const findProducts = (dto: FindProductDto): Product[] => {
+  //READONLY ARRAY FOR TAGS
   // ERROR WHEN YOU TRY TO CHANGE PROPERTY - READONLY
   //  dto.color = 'blue';
   // dto.isNew = true;
+  // dto.tags?.push()
+  // dto.tags? = []
   return products;
 };
